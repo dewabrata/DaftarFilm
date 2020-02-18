@@ -1,27 +1,35 @@
 package com.juara.daftarfilm;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.juara.daftarfilm.Model.DaftarFilm.DaftarFilmModel;
+import com.juara.daftarfilm.Model.DaftarFilm.Search;
 import com.juara.daftarfilm.Service.APIInterfacesRest;
 import com.juara.daftarfilm.Service.ApiClient;
+import com.juara.daftarfilm.adapter.FilmAdapter;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
+RecyclerView rc ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        rc = findViewById(R.id.rc);
 
         callDaftarFilm("terminator");
     }
@@ -44,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(LoginActivity.this,userList.getToken().toString(),Toast.LENGTH_LONG).show();
                 if (dataFilm != null) {
 
+                    loadData(dataFilm.getSearch());
 
                 } else {
 
@@ -66,5 +75,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void loadData(List<Search> searchs){
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        rc.setLayoutManager(mLayoutManager);
+        rc.setItemAnimator(new DefaultItemAnimator());
+        FilmAdapter fa = new FilmAdapter(searchs);
+        rc.setAdapter(fa);
     }
 }
