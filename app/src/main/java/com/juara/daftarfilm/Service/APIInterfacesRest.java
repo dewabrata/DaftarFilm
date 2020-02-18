@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 
 public interface APIInterfacesRest {
 
-    @GET("/")
+    @GET(".")
     Call<DaftarFilmModel> getFilm(@Query("apikey") String api_key,@Query("s") String title);
     /*
      @FormUrlEncoded

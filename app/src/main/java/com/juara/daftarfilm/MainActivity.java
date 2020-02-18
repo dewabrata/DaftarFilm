@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        callDaftarFilm("terminator");
     }
 
     APIInterfacesRest apiInterface;
@@ -38,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<DaftarFilmModel> call, Response<DaftarFilmModel> response) {
                 progressDialog.dismiss();
-                DaftarFilmModel dataWeather = response.body();
+                DaftarFilmModel dataFilm = response.body();
                 //Toast.makeText(LoginActivity.this,userList.getToken().toString(),Toast.LENGTH_LONG).show();
-                if (dataWeather != null) {
+                if (dataFilm != null) {
 
 
                 } else {
