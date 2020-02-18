@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.juara.daftarfilm.Model.DaftarFilm.DaftarFilmModel;
@@ -25,13 +28,24 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 RecyclerView rc ;
+Button btnSearch;
+EditText txtSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rc = findViewById(R.id.rc);
+        btnSearch = findViewById(R.id.btnSearch);
+        txtSearch = findViewById(R.id.txtSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callDaftarFilm(txtSearch.getText().toString());
+            }
+        });
 
-        callDaftarFilm("terminator");
+
     }
 
     APIInterfacesRest apiInterface;
@@ -50,18 +64,19 @@ RecyclerView rc ;
                 progressDialog.dismiss();
                 DaftarFilmModel dataFilm = response.body();
                 //Toast.makeText(LoginActivity.this,userList.getToken().toString(),Toast.LENGTH_LONG).show();
-                if (dataFilm != null) {
+                if (dataFilm != null && dataFilm.getResponse().equalsIgnoreCase("true")) {
 
                     loadData(dataFilm.getSearch());
 
                 } else {
 
-                    try {
+                    Toast.makeText(MainActivity.this, "Film tidak ditemukan", Toast.LENGTH_LONG).show();
+                  /*  try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(MainActivity.this, jObjError.getString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+                    }*/
                 }
 
             }
