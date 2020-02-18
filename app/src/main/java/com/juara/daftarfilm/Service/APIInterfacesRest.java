@@ -1,8 +1,15 @@
 package com.juara.daftarfilm.Service;
 
+import com.juara.daftarfilm.Model.DaftarFilm.DaftarFilmModel;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+
 public interface APIInterfacesRest {
 
-
+    @GET("/")
+    Call<DaftarFilmModel> getOrder(@Query("apikey") String api_key,@Query("s") String title);
     /*
      @FormUrlEncoded
     @POST("api/komplain/add")
